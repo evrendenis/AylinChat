@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AylinChat", "AylinChat\AylinChat\AylinChat.csproj", "{8E2D3C21-7737-4862-BCC2-59E1D840CB53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AylinChat.Client", "AylinChat\AylinChat.Client\AylinChat.Client.csproj", "{B38EF667-5782-415D-9AAB-ABFEBF7E6152}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E2D3C21-7737-4862-BCC2-59E1D840CB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2D3C21-7737-4862-BCC2-59E1D840CB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2D3C21-7737-4862-BCC2-59E1D840CB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2D3C21-7737-4862-BCC2-59E1D840CB53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38EF667-5782-415D-9AAB-ABFEBF7E6152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38EF667-5782-415D-9AAB-ABFEBF7E6152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38EF667-5782-415D-9AAB-ABFEBF7E6152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38EF667-5782-415D-9AAB-ABFEBF7E6152}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D01A730-3CD9-4EEF-ACEF-5A0AD0DEA589}
+	EndGlobalSection
+EndGlobal

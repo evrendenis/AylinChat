@@ -1,0 +1,70 @@
+﻿@page "/Chat"
+@using Microsoft.AspNetCore.SignalR.Client
+@rendermode InteractiveWebAssembly
+@inject NavigationManager NavMenager
+<PageTitle>Aylin-Chat</PageTitle>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">Aylin-Chat</div>
+            <div class="card-bady">
+            <ul class="list-group">
+                    @foreach (var Message in Messages)
+                    {
+                        <li class="mb-2">@Message</li>                       
+                    }
+                </ul>
+                <div class="border-primary">
+                    <div class="hstack gap-2 mb-4">
+                        <input type="text" class="form-control w-25" @bind="userName"/>
+                        <textarea class="form-control" @bind="Message"/>
+                    </div>
+                    <button class="btn btn-success" @onclick="Send">Send Message</button>
+                </div>
+            </div>
+            <div class="card-footer">
+                @if (!IsConnected)
+                {
+                    <div class="alert alert-danger"> 
+                        Dissconected !
+                    </div>
+                }
+                else 
+                {
+                    <div class="alert alert-success">
+                        conected !
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private HubConnection? hubConnection;
+    private List<string> Messages = [];
+
+    private string? userName;
+    public string? Message;
+    private DateTime Date = DateTime.Now;
+
+    protected async override Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder().WithUrl(NavMenager.ToAbsoluteUri("/Hubs")).Build();
+
+        hubConnection.On<string, string, DateTime>("ReciveMessage", (userName,Message,Date)=>
+        {
+            var concatMessage = $"{Date} {Environment.NewLine} {userName} {Environment.NewLine} {Message}";
+            Messages.Add(concatMessage);
+            InvokeAsync(() => StateHasChanged());
+        });
+
+        await hubConnection.StartAsync();
+    }
+    private bool IsConnected => 
+    hubConnection!.State == HubConnectionState.Connected;
+
+    Task Send() =>
+       hubConnection!.SendAsync("SendMessage", userName, Message, Date);
+}
