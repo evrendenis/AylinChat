@@ -9,7 +9,7 @@ namespace AylinChat.Controllers
     [ApiController]
     public class ChatController(ChatRepo chatRepo) : ControllerBase
     {
-        [HttpGet]
+        [HttpGet] 
         public async Task<ActionResult<List<Chat>>> GetChatAsync()
             => Ok(await chatRepo.GetChatsAsync());
     }
