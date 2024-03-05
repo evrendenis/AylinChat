@@ -1,6 +1,10 @@
 using AylinChat.Client.ChatServices;
 using AylinChat.Components;
+using AylinChat.Data;
 using AylinChat.Hubs;
+using AylinChat.Repos;
+using ChatModels;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddDbContext<AppDbContext>
+    (o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddControllers();
+builder.Services.AddScoped<ChatRepo>();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<ChatService>();
 var app = builder.Build();
@@ -32,5 +40,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(AylinChat.Client._Imports).Assembly);
+app.MapControllers();
 app.MapHub<ChatHub>("/Hubs");
 app.Run();
