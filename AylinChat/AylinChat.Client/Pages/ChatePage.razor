@@ -1,8 +1,7 @@
 ﻿@page "/Chat"
-@implements IDisposable
 @using AylinChat.Client.ChatServices
 @using ChatModels
-@inject ChatService ChatService
+@inject NavigationManager navigationManager
 @using Microsoft.AspNetCore.SignalR.Client
 @using System.ComponentModel.DataAnnotations
 @rendermode InteractiveWebAssembly
@@ -14,7 +13,7 @@
             <div class="card-header">Aylin-Chat</div>
             <div class="card-bady">
             <ul class="list-group">
-                    @foreach (var chat in ChatService.Chats)
+                    @foreach (var chat in Chats)
                     {
                         <li class="list-group-item mb-2">
                             @chat.DateTime.Date.ToString("dd/MMM/yyyy")
@@ -26,7 +25,7 @@
                     }
              </ul>
                 <div class="mt-3">
-                    <EditForm Model="Chat" OnValidSubmit="SendMessageClicked">
+                    <EditForm Model="Chat" OnValidSubmit="SendChat">
                     <div class="vstack gap-1">
                         <InputText @bind-Value="Chat.UserName" class="form-control w-25" placeholder="Username"/>
                             <InputTextArea @bind-Value="Chat.Message" class="form-control" placeholder="Message"/>
@@ -36,7 +35,7 @@
                 </div>
             </div>
             <div class="card-footer fw-bold">
-                @if (!ChatService.IsConnected)
+                @if (!IsConnected)
                 {
                     <div class="alert alert-danger"> 
                         Dissconected !
@@ -54,17 +53,29 @@
 </div>
 
 @code {
-    public static string? StoredUserName { get; set; }
     private Chat Chat = new();
+    private HubConnection? _hubConnection;
+    public List<Chat> Chats { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
-        ChatService.InvokeChatDisplay += StateHasChanged;
-        await ChatService.StartConnectionAsync();
-        ChatService.ReciveMessage();
-    }
+        _hubConnection = new HubConnectionBuilder()
+        .WithUrl(navigationManager.ToAbsoluteUri("/Hubs")).Build();
 
-    async void SendMessageClicked() => await ChatService.SendChat(Chat);
-    public void Dispose() => ChatService.InvokeChatDisplay -= StateHasChanged;
-       
+        _hubConnection.On<Chat>("ReceiveMessage", (Chat) =>
+        {
+            Chats.Add(Chat);
+            InvokeAsync(() => StateHasChanged());
+        } );
+        await _hubConnection.StartAsync();
+        var httpClient = new HttpClient();
+        Chats = await httpClient.GetFromJsonAsync<List<Chat>>("https://localhost:7005/api/chat");
+
+    }
+    public bool IsConnected => _hubConnection!.State == HubConnectionState.Connected;
+    public void SendChat()
+    {
+        _hubConnection!.SendAsync("SendMessage", Chat);
+        Chat.Message = null;
+    }
 }
