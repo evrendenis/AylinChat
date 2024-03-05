@@ -3,7 +3,7 @@
 namespace ChatModels
 {
     public class Chat
-    {
+    {        
         [Required]
         public string? Message { get; set; }
         [Required]
