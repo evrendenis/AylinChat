@@ -1,4 +1,4 @@
-using AylinChat.Client.Pages;
+using AylinChat.Client.ChatServices;
 using AylinChat.Components;
 using AylinChat.Hubs;
 
@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddSignalR();
+builder.Services.AddScoped<ChatService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
