@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AylinChat", "AylinChat\Ayli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AylinChat.Client", "AylinChat\AylinChat.Client\AylinChat.Client.csproj", "{B38EF667-5782-415D-9AAB-ABFEBF7E6152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatModels", "ChatModels\ChatModels.csproj", "{BB7CC084-BF10-4DB8-9E24-5B3ACCA416EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatModels", "ChatModels\ChatModels.csproj", "{BB7CC084-BF10-4DB8-9E24-5B3ACCA416EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
