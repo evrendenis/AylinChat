@@ -13,7 +13,7 @@ namespace AylinChat.Authentication
             accountGroup.MapPost("/Logout" , async(ClaimsPrincipal user, SignInManager<AppUser> singInManger) =>
             {
                 await singInManger.SignOutAsync();
-                return TypedResults.LocalRedirect("/Account/login");
+                return TypedResults.LocalRedirect("/");
             });
             return accountGroup;
         }
