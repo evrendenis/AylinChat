@@ -1,0 +1,81 @@
+﻿@page "/Account/Register"
+@inject UserManager<AppUser> userManager
+@inject NavigationManager navManager
+
+<h3>Register</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <p>@Message</p>
+}
+
+<EditForm Model="registerModel" OnValidSubmit="RegisterAsync" FormName="RegisterForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <h3>Create New Account</h3>
+
+    <div class="form-group">
+        <label for="fullname">Full Name:</label>
+        <InputText @bind-Value="registerModel.fullname" class="form-control" />
+        <ValidationMessage For="@(() => registerModel.fullname)" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <InputText @bind-Value="registerModel.email" class="form-control" />
+        <ValidationMessage For="@(() => registerModel.email)" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <InputText @bind-Value="registerModel.password" type="password" class="form-control" />
+        <ValidationMessage For="@(() => registerModel.password)" />
+    </div>
+
+    <div class="form-group">
+        <label for="confirmpassword">Confirm Password:</label>
+        <InputText @bind-Value="registerModel.Confirmpassword" type="password" class="form-control" />
+        <ValidationMessage For="@(() => registerModel.Confirmpassword)" />
+    </div>
+
+    <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    RegisterModel registerModel { get; set; } = new();
+    string Message = "";
+    async Task RegisterAsync()
+    {
+        var appUser = new AppUser()
+            {
+                FullName = registerModel.fullname,
+                Email = registerModel.email,
+                PasswordHash = registerModel.password,
+                UserName = registerModel.fullname
+            };
+        var result = await userManager.CreateAsync(appUser, registerModel.password);
+        if (!result.Succeeded)
+        {
+            Message = "Error occurred while creating the account: ";
+            foreach (var error in result.Errors)
+            {
+                Message += $"{error.Description} ";
+            }
+            return;
+        }
+        navManager.NavigateTo("/Account/Login");
+    }
+    public class RegisterModel
+    {
+        [Required]
+        public string fullname { get; set; } = string.Empty;
+        [Required, EmailAddress]
+        public string email { get; set; } = string.Empty;
+        [Required]
+        public string password { get; set; } = string.Empty;
+        [Compare(nameof(password)), Required]
+        public string Confirmpassword { get; set; } = string.Empty;
+    }
+}

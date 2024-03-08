@@ -1,16 +1,27 @@
 ﻿@page "/Chat"
+@attribute [Authorize]
 @using AylinChat.Client.ChatServices
 @using ChatModels
 @inject NavigationManager navigationManager
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
 @using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
 @rendermode InteractiveWebAssembly
 <PageTitle>Aylin-Chat</PageTitle>
 
 <div class="row">
     <div class="col-lg-7">
         <div class="card">
-            <div class="card-header">Aylin-Chat</div>
+            <AuthorizeView>
+                <Authorized>
+                    <div class="card-header">
+                        Aylin-Chat [@context.User.Claims.Where(f=>f.Type == ClaimTypes.Name).Last().Value ]
+                        </div>
+                </Authorized>
+            </AuthorizeView>
+            <div class="card-header">Aylin-Chat [] </div>
             <div class="card-bady">
             <ul class="list-group">
                     @foreach (var chat in Chats)

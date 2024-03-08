@@ -9,3 +9,10 @@
 @using AylinChat
 @using AylinChat.Client
 @using AylinChat.Components
+
+@using System.ComponentModel.DataAnnotations
+@using AylinChat.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager
+@inject SignInManager<AppUser> singInManager
+@inject NavigationManager navManager
