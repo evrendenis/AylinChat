@@ -1,6 +1,8 @@
 ﻿@page "/Chat"
 @attribute [Authorize]
 @using AylinChat.Client.ChatServices
+@using AylinChat.Client.DTOs
+@using AylinChat.Client.Models
 @using ChatModels
 @inject NavigationManager navigationManager
 @using Microsoft.AspNetCore.Authorization
@@ -12,6 +14,17 @@
 <PageTitle>Aylin-Chat</PageTitle>
 
 <div class="row">
+    <div class="col-lg-2">
+        <ul class="list-group">
+            @if(AvailableUsers != null)
+            {
+                foreach (var u in AvailableUsers)
+                {
+                    <li class="list-group-item">@u.Fullname</li>
+                }
+            }
+        </ul>
+    </div>
     <div class="col-lg-7">
         <div class="card">
             <AuthorizeView>
@@ -64,6 +77,9 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+    public List<AvailableUserDTO> AvailableUsers { get; set; } = [];
     private Chat Chat = new();
     private HubConnection? _hubConnection;
     public List<Chat> Chats { get; set; } = [];
@@ -78,9 +94,31 @@
             Chats.Add(Chat);
             InvokeAsync(() => StateHasChanged());
         } );
-        await _hubConnection.StartAsync();
+
+        _hubConnection.On<List<AvailableUserDTO>>("NotifyAllClient", (users) =>
+       {
+           AvailableUsers = users;
+           InvokeAsync(() => StateHasChanged());
+       });
+
+        await _hubConnection.StartAsync(); // need up 
+        await GetUserAuthentication();
         var httpClient = new HttpClient();
         Chats = await httpClient.GetFromJsonAsync<List<Chat>>("https://localhost:7005/api/chat");
+        AvailableUsers = await httpClient.GetFromJsonAsync<List<AvailableUserDTO>>("https://localhost:7005/api/chat/users");
+
+    }
+    private async Task GetUserAuthentication()
+    {
+        var user = (await AuthenticationState).User;
+        if(user.Identity!.IsAuthenticated == true)
+        {
+            await _hubConnection!.SendAsync("AddAvailableUserAsync", new AvailableUser()
+            {
+               UserId = user.Claims.FirstOrDefault( _ => _.Type == ClaimTypes.NameIdentifier)!.Value   
+            });
+
+        }
 
     }
     public bool IsConnected => _hubConnection!.State == HubConnectionState.Connected;
