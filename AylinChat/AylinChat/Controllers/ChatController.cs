@@ -12,5 +12,9 @@ namespace AylinChat.Controllers
         [HttpGet] 
         public async Task<ActionResult<List<Chat>>> GetChatAsync()
             => Ok(await chatRepo.GetChatsAsync());
+
+        [HttpGet("users")]
+        public async Task<ActionResult<List<Chat>>> GetAvailableUsersAsync()
+           => Ok(await chatRepo.GetAvailableUsersAsync());
     }
 }
