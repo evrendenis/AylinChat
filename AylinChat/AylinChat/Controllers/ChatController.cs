@@ -1,6 +1,5 @@
 ﻿using AylinChat.Repos;
 using ChatModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AylinChat.Controllers

@@ -1,4 +1,4 @@
-﻿namespace AylinChat.Client.Models
+﻿namespace ChatModels.Models
 {
     public class UserInfo
     {

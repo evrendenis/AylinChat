@@ -1,8 +1,8 @@
 ﻿using AylinChat.Authentication;
-using AylinChat.Client.DTOs;
-using AylinChat.Client.Models;
 using AylinChat.Data;
 using ChatModels;
+using ChatModels.DTOs;
+using ChatModels.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +39,15 @@ namespace AylinChat.Repos
                     ));
             }
             return list;
+        }
+        public async Task RemoveUserAsync(string userId)
+        {
+            var user = await appDbContext.AvailableUsers.FirstOrDefaultAsync ( u => u.UserId == userId );
+                if (user != null)
+            {
+                appDbContext.AvailableUsers.Remove(user);
+                await appDbContext.SaveChangesAsync();
+            }
         }
     }
 }
