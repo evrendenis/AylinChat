@@ -1,6 +1,6 @@
 ﻿using AylinChat.Authentication;
-using AylinChat.Client.Models;
 using ChatModels;
+using ChatModels.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

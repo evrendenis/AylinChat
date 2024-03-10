@@ -1,6 +1,7 @@
-﻿using AylinChat.Client.Models;
-using AylinChat.Repos;
+﻿using AylinChat.Repos;
 using ChatModels;
+using ChatModels.DTOs;
+using ChatModels.Models;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AylinChat.Hubs
@@ -17,8 +18,16 @@ namespace AylinChat.Hubs
         {
             availableUser.ConnectionId = Context.ConnectionId;
             await chatRepo.AddAvailableUserAsync(availableUser);
-            var users = chatRepo.GetAvailableUsersAsync();
-            await Clients.All.SendAsync("NotifyAllClient", users);
+            await Clients.All.SendAsync("NotifyAllClient", await GetUsers());
         }
+        public async Task RemoveUserAsync(string userId)
+        {
+            await chatRepo.RemoveUserAsync(userId);
+            await Clients.All.SendAsync("NotifyAllClient", await GetUsers());
+        }
+
+        private async Task<List<AvailableUserDTO>> GetUsers()
+            =>   await chatRepo.GetAvailableUsersAsync();
+       
     }
 }
