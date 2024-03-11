@@ -1,4 +1,5 @@
 using AylinChat.Authentication;
+using AylinChat.Client.AppState;
 using AylinChat.Client.ChatServices;
 using AylinChat.Components;
 using AylinChat.Data;
@@ -15,7 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-
+builder.Services.AddScoped<MyHubConnectionService>();
 
 builder.Services.AddDbContext<AppDbContext>
     (o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<AppDbContext>
 builder.Services.AddControllers();
 builder.Services.AddScoped<ChatRepo>();
 builder.Services.AddSignalR();
-builder.Services.AddScoped<ChatService>();
+builder.Services.AddScoped<AvailableUserState>();
 
 builder.Services.AddIdentityCore<AppUser>()
     .AddEntityFrameworkStores<AppDbContext>()
