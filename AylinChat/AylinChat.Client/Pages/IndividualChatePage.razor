@@ -1,0 +1,48 @@
+﻿@*
+@page "/individual-chat"
+@using AylinChat.Client.AppState
+@using AylinChat.Client.ChatServices
+@using ChatModels.DTOs
+@using ChatModels.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.SignalR.Client
+@using System.Security.Claims
+@inject MyHubConnectionService HubConnectionService
+@inject AvailableUserState  state
+@rendermode InteractiveWebAssembly
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationState { get; set; }
+    private List<IndividualChatDTO> individualChats { get; set; } = [];
+    private IndividualChat IndividualChatModel { get; set; } = new();
+    private HubConnection _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = HubConnectionService.GetHubConnection();
+
+        _hubConnection.On<GroupChatDTO>("ReceiveindividualMessage", (individualChats) =>
+        {
+            individualChats.Add(individualChats);
+            InvokeAsync(() => StateHasChanged());
+        });
+        var httpClient = new HttpClient();
+        var user = new RequestChatDto()
+            {
+                SenderId = (( await authenticationState).User).Claims.FirstOrDefault
+                (c => c.Type == ClaimTypes.NameIdentifier!)!.Value,
+                ReceiverId = state.ReceiverId
+        };
+        _hubConnection.On<List<AvailableUserDTO>>("NotifyAllClient", (individualChats) =>
+        {
+            individualChats = users;
+            InvokeAsync(() => StateHasChanged());
+        });
+        var response = await httpClient.PostAsJsonAsync($"https://localhost:7005/api/chat/individual", user);
+        IndividualChats = await response.Content.ReadFromJsonAsAsync<List<IndividualChatDTO>>();
+
+    }
+}
+*@
