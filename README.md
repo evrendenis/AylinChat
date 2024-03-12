@@ -1,6 +1,3 @@
-
-Tabii, işte İngilizce ve Türkçe olarak projenin açıklaması:
-
 AylinChat
 Description (Açıklama):
 
