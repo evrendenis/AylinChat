@@ -1,40 +1,46 @@
-AylinChat
-Description (Açıklama):
+## Aylin-Chat (English)
 
-AylinChat is a group conversation project built with .NET 8 on GitHub. The project includes authentication, login, and registration functionalities. It provides a platform where members can engage in group conversations and showcases their online status.
+This project is a web application where users can participate in group chats and see the online status of other users. The application is developed using SignalR technology, providing real-time communication. It also maintains the group chat history and displays other users participating in the group chat.
 
-AylinChat, GitHub üzerinde .NET 8 ile oluşturulmuş bir grup konuşma projesidir. Proje, kimlik doğrulama, giriş ve kayıt işlevselliği içerir. Üyelerin grup sohbetlerine katılabileceği ve çevrimiçi durumlarını gösterebileceği bir platform sunar.
+### Features
 
-Features (Özellikler):
+- Users can log in or sign up to join the group chat.
+- Users in the group chat are displayed in real-time, allowing you to see if other users are online.
+- The group chat provides real-time communication between users and maintains a message history.
+- Users can click on other users to start a private chat and be directed to a separate chat window.
 
-Authentication (Kimlik Doğrulama): Users can securely authenticate themselves using credentials.
+### Notes
 
-Register (Kayıt Ol): New users can register with their details securely.
-Login (Giriş): Registered users can log in securely to access the platform.
-Group Conversations (Grup Konuşmaları): Members can participate in group conversations.
+- This application is implemented using SignalR technology and uses the WebSocket protocol for real-time communication.
+- The online status of users, user list, and group chat history are maintained on the server side and can be reset each time the application is reloaded.
+- The application allows users to join group chats, send messages, and communicate between online users.
 
-Real-time Messaging (Gerçek Zamanlı Mesajlaşma): Instant messaging feature for seamless communication.
-Online Status (Çevrimiçi Durumu): Users can see who is online in the group.
-Security (Güvenlik): Implemented security measures to ensure data privacy and integrity.
+### Visual
 
-Encryption (Şifreleme): Messages and user data are encrypted to maintain confidentiality.
-Authorization (Yetkilendirme): Access control mechanisms to restrict unauthorized access.
-Usage (Kullanım):
+![Screen 1 ](https://github.com/evrendenis/AylinChat/assets/155571902/2304401c-c800-40ce-b4fd-9a3c79f93d88)
+![Screen 2](https://github.com/evrendenis/AylinChat/assets/155571902/bdb47177-a9f4-4f81-8d77-14aba95a3c19)
+![Screen 3 ](https://github.com/evrendenis/AylinChat/assets/155571902/272b44cb-2c1c-4ba4-a4e4-12582dd357f9)
 
-Clone the repository locally.
-Set up your .NET environment.
-Run the application.
-Register or log in to start using AylinChat.
-Engage in group conversations and enjoy real-time messaging.
-Kullanım:
+## Aylin-Chat  (Türkçe)
 
-Deposunu yerel olarak klonlayın.
-.NET ortamınızı kurun.
-Uygulamayı çalıştırın.
-AylinChat'i kullanmaya başlamak için kayıt olun veya giriş yapın.
-Grup sohbetlerine katılın ve gerçek zamanlı mesajlaşmanın keyfini çıkarın.
-Contributing (Katkıda Bulunma):
+Bu proje, kullanıcıların grup sohbetleri yapabileceği ve kullanıcıların çevrimiçi durumunu görebileceği bir web uygulamasıdır. Bu uygulama, SignalR teknolojisi kullanılarak geliştirilmiştir ve gerçek zamanlı iletişim sağlar. Ayrıca, kullanıcıların grup sohbet geçmişini tutar ve kullanıcıların grup sohbetine katılan diğer kullanıcılarını gösterir.
 
-Contributions are welcome! Feel free to fork the repository and submit pull requests for new features, improvements, or bug fixes.
+### Özellikler
 
-Katkılarınızı bekliyoruz! Deposunu forklayabilir ve yeni özellikler, iyileştirmeler veya hata düzeltmeleri için pull request'ler gönderebilirsiniz.
+- Kullanıcılar, grup sohbetine katılmak için uygulamaya giriş yapabilir veya üye olabilir.
+- Grup sohbetindeki kullanıcılar anlık olarak gösterilir, böylece diğer kullanıcıların çevrimiçi olup olmadığını görebilirsiniz.
+- Grup sohbeti, kullanıcılar arasında gerçek zamanlı iletişim sağlar ve mesaj geçmişini tutar.
+- Kullanıcılar, belirli bir kullanıcıya özel sohbet başlatmak için diğer kullanıcılara tıklayabilir ve ayrı bir sohbet penceresine yönlendirilebilir.
+
+### Notlar
+
+- Bu uygulama, SignalR teknolojisi kullanılarak gerçekleştirilmiştir ve anlık iletişim için WebSocket protokolünü kullanır.
+- Kullanıcıların çevrimiçi durumu, kullanıcı listesi ve grup sohbet geçmişi, sunucu tarafında tutulur ve uygulama her yeniden yüklendiğinde sıfırlanabilir.
+- Uygulama, kullanıcıların grup sohbetlerine katılmasını, mesaj göndermesini ve çevrimiçi kullanıcılar arasında iletişim kurmasını sağlar.
+
+### Görsel
+
+![Screen 1 ](https://github.com/evrendenis/AylinChat/assets/155571902/2304401c-c800-40ce-b4fd-9a3c79f93d88)
+![Screen 2](https://github.com/evrendenis/AylinChat/assets/155571902/bdb47177-a9f4-4f81-8d77-14aba95a3c19)
+![Screen 3 ](https://github.com/evrendenis/AylinChat/assets/155571902/272b44cb-2c1c-4ba4-a4e4-12582dd357f9)
+
